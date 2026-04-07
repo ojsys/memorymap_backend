@@ -21,6 +21,9 @@ INSTALLED_APPS = [
     'victims',
     'oral_histories',
     'initiatives',
+    'imports',
+    'submissions',
+    'content',
 ]
 
 MIDDLEWARE = [

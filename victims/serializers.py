@@ -5,21 +5,19 @@ from .models import Victim, ConsentStatus
 class VictimListSerializer(serializers.ModelSerializer):
     display_name = serializers.ReadOnlyField()
     effective_year = serializers.ReadOnlyField()
+    # Annotated in the viewset queryset
+    has_oral_history = serializers.BooleanField(read_only=True, default=False)
+    is_mapped = serializers.SerializerMethodField()
 
     class Meta:
         model = Victim
         fields = [
-            'id', 'display_name', 'gender', 'community_ward',
-            'effective_year', 'consent_status',
+            'id', 'display_name', 'age_at_death', 'gender', 'community_ward',
+            'effective_year', 'consent_status', 'has_oral_history', 'is_mapped',
         ]
 
-    def to_representation(self, instance):
-        data = super().to_representation(instance)
-        # Never expose consent metadata to public — only admins
-        request = self.context.get('request')
-        if not (request and request.user and request.user.is_staff):
-            data.pop('consent_status', None)
-        return data
+    def get_is_mapped(self, obj):
+        return any([obj.home_lat, obj.incident_lat, obj.burial_lat])
 
 
 class VictimDetailSerializer(serializers.ModelSerializer):
@@ -44,8 +42,7 @@ class VictimDetailSerializer(serializers.ModelSerializer):
         request = self.context.get('request')
         is_staff = request and request.user and request.user.is_staff
         if not is_staff:
-            # Strip admin-only fields from public view
-            for field in ['full_name', 'consent_status', 'consent_date', 'consent_notes']:
+            for field in ['full_name', 'consent_date', 'consent_notes']:
                 data.pop(field, None)
         return data
 

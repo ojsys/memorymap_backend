@@ -11,4 +11,7 @@ urlpatterns = [
     path('api/', include('victims.urls')),
     path('api/', include('oral_histories.urls')),
     path('api/', include('initiatives.urls')),
+    path('api/', include('imports.urls')),
+    path('api/', include('submissions.urls')),
+    path('api/', include('content.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
