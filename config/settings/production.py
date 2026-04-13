@@ -1,3 +1,6 @@
+import pymysql
+pymysql.install_as_MySQLdb()
+
 from .base import *
 from decouple import config as default_config, RepositoryEnv, Config
 from pathlib import Path
