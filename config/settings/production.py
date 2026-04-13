@@ -1,5 +1,5 @@
 from .base import *
-from decouple import config, RepositoryEnv, File
+from decouple import config, RepositoryEnv
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
