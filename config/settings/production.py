@@ -1,5 +1,5 @@
 from .base import *
-from decouple import config, RepositoryEnv
+from decouple import config as default_config, RepositoryEnv, Config
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -12,7 +12,9 @@ from pathlib import Path
 # Check if .env file exists before loading
 env_path = BASE_DIR.parent / '.env'
 if env_path.exists():
-    config = RepositoryEnv(str(env_path))
+    config = Config(RepositoryEnv(str(env_path))) # Create a new Config instance using RepositoryEnv
+else:
+    config = default_config # Fallback to default config if .env not found
 
 SECRET_KEY = config('SECRET_KEY')
 DEBUG = False
