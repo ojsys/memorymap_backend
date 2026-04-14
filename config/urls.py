@@ -3,10 +3,10 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
-from config.views import redirect_to_frontend
+from config.views import api_landing_page, redirect_to_frontend
 
 urlpatterns = [
-    path('', redirect_to_frontend, name='redirect_to_frontend'),
+    path('', api_landing_page, name='api_landing_page'),
     path('admin/', admin.site.urls),
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
