@@ -6,7 +6,7 @@ PassengerPython "/home/middlebe/virtualenv/memorymap/3.11/bin/python"
 <IfModule mod_rewrite.c>
     RewriteEngine On
 
-    # Exclude /web (React frontend) from Django handling
-    RewriteCond %{REQUEST_URI} ^/web
+    # Serve /static/ directly via Apache — bypass Passenger entirely
+    RewriteCond %{REQUEST_URI} ^/static/
     RewriteRule ^ - [L]
 </IfModule>

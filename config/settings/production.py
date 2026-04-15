@@ -40,15 +40,10 @@ DATABASES = {
 
 CORS_ALLOWED_ORIGINS = config('CORS_ALLOWED_ORIGINS', cast=lambda v: [s.strip() for s in v.split(',')])
 
-# WhiteNoise — serve and compress static files (Django admin, DRF browsable API, etc.)
-STORAGES = {
-    'default': {
-        'BACKEND': 'django.core.files.storage.FileSystemStorage',
-    },
-    'staticfiles': {
-        'BACKEND': 'whitenoise.storage.CompressedManifestStaticFilesStorage',
-    },
-}
+# Static files — collected into the API subdomain's document root so Apache
+# serves them directly at https://api.middlebeltmemorial.org/static/
+# without going through Passenger.
+STATIC_ROOT = Path('/home/middlebe/api.middlebeltmemorial.org/static')
 CSRF_TRUSTED_ORIGINS = config('CSRF_TRUSTED_ORIGINS', cast=lambda v: [s.strip() for s in v.split(',')])
 
 # Security hardening
