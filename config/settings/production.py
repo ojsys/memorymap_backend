@@ -21,6 +21,12 @@ else:
 
 SECRET_KEY = config('SECRET_KEY')
 DEBUG = False
+
+# cPanel shared hosting: MySQL timezone tables are not populated, so CONVERT_TZ()
+# calls from Django's date_hierarchy / timezone-aware queries will crash with
+# "Database returned an invalid datetime value". Disable tz support here.
+USE_TZ = False
+TIME_ZONE = 'Africa/Lagos'
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=lambda v: [s.strip() for s in v.split(',')])
 
 DATABASES = {
@@ -32,7 +38,7 @@ DATABASES = {
         'HOST': config('DB_HOST'),
         'PORT': config('DB_PORT', default='3306', cast=int),
         'OPTIONS': {
-            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+            'init_command': "SET sql_mode='STRICT_TRANS_TABLES', time_zone='+01:00'",
             'charset': 'utf8mb4',
         }
     }
