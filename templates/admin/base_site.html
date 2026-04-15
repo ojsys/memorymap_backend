@@ -5,14 +5,14 @@
 
 {% block branding %}
 <h1 id="site-name">
-  <a href="{% url 'admin:index' %}" style="display:flex;align-items:center;gap:10px;color:#fff;text-decoration:none;">
-    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
-      style="opacity:0.9">
+  <a href="{% url 'admin:index' %}">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.8" style="vertical-align:middle;margin-right:8px;opacity:0.85">
       <circle cx="12" cy="12" r="10"/>
       <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
       <path d="M2 12h20"/>
     </svg>
-    <span style="font-size:15px;font-weight:600;letter-spacing:0.01em;">Middle Belt Memorial</span>
+    Middle Belt Memorial
   </a>
 </h1>
 {% endblock %}
@@ -20,197 +20,348 @@
 {% block extrahead %}
 {{ block.super }}
 <style>
-  /* ── Colour palette ──────────────────────────────────────── */
-  :root {
-    --primary:                  #4b6bfb;
-    --secondary:                #0f1c5c;
-    --accent:                   #fbbf24;
-    --primary-fg:               #fff;
-    --header-bg:                #0f1c5c;
-    --header-link-color:        #c7d2fe;
-    --breadcrumbs-bg:           #4b6bfb;
-    --breadcrumbs-fg:           rgba(255,255,255,0.7);
-    --breadcrumbs-link-fg:      #fff;
-    --link-fg:                  #4b6bfb;
-    --link-hover-color:         #3451e0;
-    --link-selected-fg:         #3451e0;
-    --button-bg:                #4b6bfb;
-    --button-hover-bg:          #3451e0;
-    --default-button-bg:        #0f1c5c;
-    --default-button-hover-bg:  #162480;
-    --selected-bg:              #eef2ff;
-    --selected-row:             #f0f4ff;
-    --darkened-bg:              #f5f8ff;
-    --body-bg:                  #f8faff;
-    --hairline-color:           #e0e7ff;
-    --border-color:             #c7d2fe;
-    --delete-button-bg:         #ef4444;
-    --delete-button-hover-bg:   #dc2626;
-  }
+/* ═══════════════════════════════════════════════════════════
+   CSS VARIABLE OVERRIDES  (Django 4+ uses these)
+═══════════════════════════════════════════════════════════ */
+:root {
+  --primary:                 #4b6bfb;
+  --secondary:               #0f1c5c;
+  --accent:                  #fbbf24;
+  --primary-fg:              #fff;
+  --header-bg:               #0f1c5c;
+  --header-link-color:       #fff;
+  --breadcrumbs-bg:          #4b6bfb;
+  --breadcrumbs-fg:          #fff;
+  --breadcrumbs-link-fg:     #fff;
+  --link-fg:                 #4b6bfb;
+  --link-hover-color:        #2338c4;
+  --link-selected-fg:        #2338c4;
+  --button-bg:               #4b6bfb;
+  --button-hover-bg:         #2338c4;
+  --default-button-bg:       #0f1c5c;
+  --default-button-hover-bg: #162480;
+  --selected-bg:             #eef2ff;
+  --selected-row:            #f0f4ff;
+  --darkened-bg:             #f0f4ff;
+  --body-fg:                 #1e293b;
+  --body-bg:                 #f5f8ff;
+  --body-quiet-color:        #475569;
+  --body-loud-color:         #0f172a;
+  --hairline-color:          #e0e7ff;
+  --border-color:            #c7d2fe;
+  --delete-button-bg:        #ef4444;
+  --delete-button-hover-bg:  #dc2626;
+  --object-tools-bg:         #4b6bfb;
+  --object-tools-hover-bg:   #2338c4;
+}
 
-  /* ── Header ─────────────────────────────────────────────── */
-  #header {
-    background: #0f1c5c;
-    border-bottom: 1px solid rgba(75,107,251,0.3);
-    padding: 0 20px;
-    height: 52px;
-    display: flex;
-    align-items: center;
-  }
-  #branding { flex: 1; }
-  #user-tools {
-    font-size: 12px;
-    color: #a5b4fc;
-  }
-  #user-tools a { color: #c7d2fe; }
-  #user-tools a:hover { color: #fff; }
-  #logout-form button { color: #c7d2fe; background: none; border: none; cursor: pointer; font-size: 12px; }
-  #logout-form button:hover { color: #fff; }
+/* ═══════════════════════════════════════════════════════════
+   EXPLICIT OVERRIDES (using !important where Django wins)
+═══════════════════════════════════════════════════════════ */
 
-  /* ── Navigation ──────────────────────────────────────────── */
-  div.breadcrumbs {
-    background: #4b6bfb;
-    padding: 8px 20px;
-    font-size: 12px;
-  }
-  div.breadcrumbs a { color: rgba(255,255,255,0.8); }
-  div.breadcrumbs a:hover { color: #fff; }
+/* Body */
+body {
+  background: #f5f8ff !important;
+  color: #1e293b !important;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+}
 
-  /* ── Body & layout ───────────────────────────────────────── */
-  body {
-    background: #f5f8ff;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  }
-  #content { padding: 24px 28px; }
-  #content-main { background: transparent; }
+/* ── Header ─────────────────────────────────────────────── */
+#header {
+  background: #0f1c5c !important;
+  color: #fff !important;
+}
+#branding h1,
+#branding h1 a:link,
+#branding h1 a:visited {
+  color: #fff !important;
+  font-weight: 600 !important;
+  font-size: 15px !important;
+}
+#user-tools,
+#user-tools a:link,
+#user-tools a:visited { color: #a5b4fc !important; }
+#user-tools a:hover   { color: #fff !important; }
 
-  /* ── Module headers (app sections) ──────────────────────── */
-  .module caption, .module h2 {
-    background: #0f1c5c;
-    color: #fff;
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: 0.05em;
-    padding: 8px 14px;
-    border-radius: 8px 8px 0 0;
-    text-transform: uppercase;
-  }
-  .module {
-    border-radius: 8px;
-    overflow: hidden;
-    border: 1px solid #e0e7ff;
-    box-shadow: 0 1px 8px rgba(75,107,251,0.07);
-    background: #fff;
-    margin-bottom: 20px;
-  }
+/* ── Breadcrumbs ─────────────────────────────────────────── */
+div.breadcrumbs {
+  background: #4b6bfb !important;
+  color: #fff !important;
+  padding: 8px 20px !important;
+  font-size: 12px !important;
+}
+div.breadcrumbs a:link,
+div.breadcrumbs a:visited { color: rgba(255,255,255,0.85) !important; }
+div.breadcrumbs a:hover   { color: #fff !important; }
 
-  /* ── Changelist table ────────────────────────────────────── */
-  #changelist table thead th {
-    background: #f0f4ff;
-    color: #374151;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    border-bottom: 2px solid #e0e7ff;
-    padding: 10px 14px;
-  }
-  #changelist table tbody tr:hover { background: #f5f8ff; }
-  #changelist table tbody td { padding: 10px 14px; border-bottom: 1px solid #eef2ff; font-size: 13px; }
-  #changelist-filter {
-    background: #fff;
-    border-left: 1px solid #e0e7ff;
-    padding: 16px;
-  }
-  #changelist-filter h2 {
-    background: #f0f4ff;
-    color: #0f1c5c;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.07em;
-    text-transform: uppercase;
-    padding: 8px 12px;
-    border-radius: 6px;
-    margin-bottom: 10px;
-  }
-  #changelist-filter h3 {
-    font-size: 11px;
-    font-weight: 700;
-    color: #6b7280;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    margin: 16px 0 6px;
-  }
-  #changelist-filter li.selected a { color: #4b6bfb; font-weight: 600; }
+/* ── Content area ────────────────────────────────────────── */
+#content {
+  background: transparent !important;
+  padding: 24px 28px !important;
+}
+#content-main { background: transparent !important; }
+#content h1   { color: #0f172a !important; font-size: 20px !important; }
+#content h2   { color: #0f172a !important; }
+p, label, td, th, li { color: #1e293b !important; }
 
-  /* ── Forms ───────────────────────────────────────────────── */
-  .form-row { padding: 10px 0; border-bottom: 1px solid #eef2ff; }
-  fieldset.module h2 { text-transform: uppercase; }
-  .field-box label, .form-row label { font-size: 12px; font-weight: 600; color: #374151; }
-  input[type=text], input[type=email], input[type=password], input[type=number],
-  input[type=url], select, textarea {
-    border: 1px solid #c7d2fe;
-    border-radius: 6px;
-    padding: 6px 10px;
-    font-size: 13px;
-    transition: border-color 0.2s;
-  }
-  input:focus, select:focus, textarea:focus {
-    outline: none;
-    border-color: #4b6bfb;
-    box-shadow: 0 0 0 3px rgba(75,107,251,0.15);
-  }
+/* ── Module boxes ────────────────────────────────────────── */
+.module {
+  border: 1px solid #e0e7ff !important;
+  border-radius: 8px !important;
+  overflow: hidden !important;
+  box-shadow: 0 1px 8px rgba(75,107,251,0.07) !important;
+  background: #fff !important;
+  margin-bottom: 20px !important;
+}
+.module caption,
+.module > h2,
+.module > h3 {
+  background: #0f1c5c !important;
+  color: #fff !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.06em !important;
+  text-transform: uppercase !important;
+  padding: 9px 14px !important;
+  border-radius: 0 !important;
+}
+.module table { background: #fff !important; }
+.module td,
+.module th    { color: #1e293b !important; }
 
-  /* ── Buttons ─────────────────────────────────────────────── */
-  .button, input[type=submit], input[type=button], .submit-row input, a.button {
-    border-radius: 6px;
-    font-size: 12px;
-    font-weight: 600;
-    padding: 7px 16px;
-    letter-spacing: 0.01em;
-  }
-  .submit-row {
-    background: #f5f8ff;
-    border-top: 1px solid #e0e7ff;
-    border-radius: 0 0 8px 8px;
-    padding: 12px 16px;
-  }
-  .deletelink-box a.deletelink {
-    background: #ef4444;
-    border-radius: 6px;
-    padding: 7px 16px;
-    color: #fff;
-    font-size: 12px;
-    font-weight: 600;
-  }
+/* ── Changelist table ────────────────────────────────────── */
+#changelist table { background: #fff !important; border-collapse: collapse !important; }
+#changelist table thead th {
+  background: #f0f4ff !important;
+  color: #374151 !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.06em !important;
+  text-transform: uppercase !important;
+  border-bottom: 2px solid #e0e7ff !important;
+  padding: 10px 14px !important;
+}
+#changelist table tbody td {
+  padding: 10px 14px !important;
+  border-bottom: 1px solid #eef2ff !important;
+  font-size: 13px !important;
+  color: #1e293b !important;
+}
+#changelist table tbody tr:hover { background: #f5f8ff !important; }
+#changelist table tbody tr.selected { background: #eef2ff !important; }
 
-  /* ── Messages ────────────────────────────────────────────── */
-  ul.messagelist li {
-    border-radius: 6px;
-    font-size: 13px;
-    margin-bottom: 8px;
-    padding: 10px 16px;
-  }
-  ul.messagelist li.success { background: #d1fae5; color: #065f46; border-left: 4px solid #10b981; }
-  ul.messagelist li.warning { background: #fef3c7; color: #92400e; border-left: 4px solid #f59e0b; }
-  ul.messagelist li.error   { background: #fee2e2; color: #7f1d1d; border-left: 4px solid #ef4444; }
+/* Row action checkboxes */
+#changelist-form .action-counter { color: #4b6bfb !important; font-weight: 600 !important; }
 
-  /* ── Sidebar (recent actions) ────────────────────────────── */
-  #content-related .module { border-color: #e0e7ff; }
-  #recent-actions-module h2 { background: #0f1c5c; }
-  #recent-actions-module .actionlist li { font-size: 12px; padding: 5px 0; border-bottom: 1px solid #eef2ff; }
+/* ── Filters sidebar ─────────────────────────────────────── */
+#changelist-filter {
+  background: #fff !important;
+  border-left: 1px solid #e0e7ff !important;
+  padding: 16px !important;
+}
+#changelist-filter h2 {
+  background: #0f1c5c !important;
+  color: #fff !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.07em !important;
+  padding: 8px 12px !important;
+  border-radius: 6px !important;
+  margin-bottom: 10px !important;
+}
+#changelist-filter h3 {
+  color: #475569 !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.06em !important;
+  margin: 16px 0 6px !important;
+}
+#changelist-filter li a { color: #4b6bfb !important; font-size: 13px !important; }
+#changelist-filter li.selected a {
+  color: #0f1c5c !important;
+  font-weight: 700 !important;
+}
+#changelist-filter li a:hover { color: #2338c4 !important; }
 
-  /* ── Pagination ──────────────────────────────────────────── */
-  .paginator a, .paginator span { border-radius: 4px; font-size: 12px; }
-  .paginator .this-page { background: #4b6bfb; color: #fff; border-radius: 4px; padding: 3px 8px; }
+/* ── Forms ───────────────────────────────────────────────── */
+.form-row {
+  padding: 10px 0 !important;
+  border-bottom: 1px solid #eef2ff !important;
+}
+.form-row label,
+.field-box label  {
+  color: #374151 !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+}
+.help { color: #64748b !important; font-size: 11px !important; }
+input[type=text],
+input[type=email],
+input[type=password],
+input[type=number],
+input[type=url],
+input[type=date],
+select,
+textarea {
+  border: 1px solid #c7d2fe !important;
+  border-radius: 6px !important;
+  padding: 6px 10px !important;
+  font-size: 13px !important;
+  color: #1e293b !important;
+  background: #fff !important;
+}
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: #4b6bfb !important;
+  box-shadow: 0 0 0 3px rgba(75,107,251,0.15) !important;
+  outline: none !important;
+}
 
-  /* ── Object tools ────────────────────────────────────────── */
-  ul.object-tools li a {
-    background: #4b6bfb;
-    border-radius: 20px;
-    font-size: 11px;
-    font-weight: 600;
-  }
-  ul.object-tools li a:hover { background: #3451e0; }
+/* ── Buttons ─────────────────────────────────────────────── */
+.button,
+input[type=submit],
+input[type=button],
+.submit-row input[type=submit],
+a.button {
+  background: #4b6bfb !important;
+  color: #fff !important;
+  border: none !important;
+  border-radius: 6px !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  padding: 8px 16px !important;
+  cursor: pointer !important;
+  text-decoration: none !important;
+}
+.button:hover,
+input[type=submit]:hover,
+.submit-row input[type=submit]:hover { background: #2338c4 !important; }
+
+.button.default,
+input[type=submit].default {
+  background: #0f1c5c !important;
+}
+.button.default:hover { background: #162480 !important; }
+
+.deletelink,
+a.deletelink,
+.submit-row a.deletelink {
+  background: #ef4444 !important;
+  color: #fff !important;
+  border-radius: 6px !important;
+  padding: 8px 16px !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  text-decoration: none !important;
+}
+.submit-row {
+  background: #f0f4ff !important;
+  border-top: 1px solid #e0e7ff !important;
+  padding: 12px 16px !important;
+}
+
+/* ── Links ───────────────────────────────────────────────── */
+a:link, a:visited { color: #4b6bfb !important; }
+a:hover           { color: #2338c4 !important; }
+/* Override for white-on-dark areas */
+#header a:link,
+#header a:visited,
+div.breadcrumbs a:link,
+div.breadcrumbs a:visited { color: #fff !important; }
+
+/* ── Object tools (top-right "Add" button) ───────────────── */
+ul.object-tools li a {
+  background: #4b6bfb !important;
+  color: #fff !important;
+  border-radius: 20px !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+}
+ul.object-tools li a:hover { background: #2338c4 !important; }
+
+/* ── Fieldsets ───────────────────────────────────────────── */
+fieldset.module h2 {
+  background: #0f1c5c !important;
+  color: #fff !important;
+}
+fieldset.collapsed h2 {
+  background: #1e3a8a !important;
+  color: #fff !important;
+}
+.collapse-toggle { color: #a5b4fc !important; }
+
+/* ── Messages ────────────────────────────────────────────── */
+ul.messagelist li {
+  border-radius: 6px !important;
+  font-size: 13px !important;
+  margin-bottom: 8px !important;
+  padding: 10px 16px !important;
+  color: #0f172a !important;
+}
+ul.messagelist li.success {
+  background: #d1fae5 !important;
+  color: #065f46 !important;
+  border-left: 4px solid #10b981 !important;
+}
+ul.messagelist li.warning {
+  background: #fef3c7 !important;
+  color: #78350f !important;
+  border-left: 4px solid #f59e0b !important;
+}
+ul.messagelist li.error {
+  background: #fee2e2 !important;
+  color: #7f1d1d !important;
+  border-left: 4px solid #ef4444 !important;
+}
+
+/* ── Recent actions sidebar ──────────────────────────────── */
+#content-related .module         { border-color: #e0e7ff !important; }
+#content-related .module h2      { background: #0f1c5c !important; color: #fff !important; }
+#content-related .actionlist li  { font-size: 12px !important; padding: 5px 0 !important;
+                                    border-bottom: 1px solid #eef2ff !important; }
+#content-related .actionlist p   { color: #1e293b !important; }
+.action-icon { color: #4b6bfb !important; }
+
+/* ── Inline admin ────────────────────────────────────────── */
+.inline-group h2 {
+  background: #1e3a8a !important;
+  color: #fff !important;
+}
+.inline-related h3 {
+  background: #1e3a8a !important;
+  color: #fff !important;
+  padding: 8px 14px !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+}
+
+/* ── Paginator ───────────────────────────────────────────── */
+.paginator { color: #475569 !important; }
+.paginator a,
+.paginator span     { color: #4b6bfb !important; }
+.paginator .this-page {
+  background: #4b6bfb !important;
+  color: #fff !important;
+  border-radius: 4px !important;
+  padding: 3px 8px !important;
+}
+
+/* ── Calendar / date picker ──────────────────────────────── */
+.calendar caption,
+.calendarbox h2 {
+  background: #0f1c5c !important;
+  color: #fff !important;
+}
+.calendar td a:hover { background: #4b6bfb !important; color: #fff !important; }
+
+/* ── Django admin nav sidebar (Django 3.1+) ──────────────── */
+#nav-sidebar { background: #0f1c5c !important; }
+#nav-sidebar .current-app .section:link,
+#nav-sidebar .current-app .section:visited { color: #a5b4fc !important; }
+.toggle-nav-sidebar { border-color: #e0e7ff !important; }
 </style>
 {% endblock %}
