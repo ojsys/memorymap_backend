@@ -39,9 +39,14 @@ DATABASES = {
 }
 
 CORS_ALLOWED_ORIGINS = config('CORS_ALLOWED_ORIGINS', cast=lambda v: [s.strip() for s in v.split(',')])
+CSRF_TRUSTED_ORIGINS = config('CSRF_TRUSTED_ORIGINS', cast=lambda v: [s.strip() for s in v.split(',')])
 
 # Security hardening
-SECURE_SSL_REDIRECT = True
+# cPanel terminates SSL before the request reaches Django, so we must NOT redirect
+# here (it would loop). Let Apache/cPanel enforce HTTPS at the server level.
+SECURE_SSL_REDIRECT = False
+# Tell Django to trust the X-Forwarded-Proto header set by cPanel's proxy
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 SECURE_HSTS_SECONDS = 31536000
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 SECURE_HSTS_PRELOAD = True
