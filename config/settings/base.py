@@ -24,6 +24,7 @@ INSTALLED_APPS = [
     'imports',
     'submissions',
     'content',
+    'staff',
 ]
 
 MIDDLEWARE = [
@@ -91,4 +92,10 @@ REST_FRAMEWORK = {
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(hours=8),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
+    'UPDATE_LAST_LOGIN': True,  # shown on the Staff Accounts page
 }
+
+# The Django admin is for developers only; staff use the React admin panel.
+# Set DJANGO_ADMIN_URL in the environment to move it off the guessable /admin/.
+import os
+DJANGO_ADMIN_URL = os.environ.get('DJANGO_ADMIN_URL', 'admin/')

@@ -1,7 +1,7 @@
 from django.utils import timezone
 from rest_framework import viewsets, status
-from rest_framework.decorators import action, api_view, permission_classes
-from rest_framework.permissions import IsAdminUser, AllowAny, IsAuthenticated
+from rest_framework.decorators import action
+from rest_framework.permissions import IsAdminUser, AllowAny
 from rest_framework.response import Response
 
 from victims.models import Victim, ConsentStatus, Gender
@@ -11,24 +11,6 @@ from .serializers import (
     PublicSubmissionAdminSerializer,
     PublicSubmissionListSerializer,
 )
-
-
-# ── /api/me/ — current user info including role ────────────────────────────
-
-@api_view(['GET'])
-@permission_classes([IsAuthenticated])
-def me(request):
-    user = request.user
-    groups = list(user.groups.values_list('name', flat=True))
-    return Response({
-        'id':           user.id,
-        'username':     user.username,
-        'full_name':    user.get_full_name(),
-        'is_superuser': user.is_superuser,
-        'is_staff':     user.is_staff,
-        'groups':       groups,
-        'is_cvt':       'CVT' in groups and not user.is_superuser,
-    })
 
 
 # ── Submission ViewSet ─────────────────────────────────────────────────────
